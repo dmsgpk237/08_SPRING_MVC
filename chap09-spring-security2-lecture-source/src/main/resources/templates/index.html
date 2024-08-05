@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1> 기본화면입니다~</h1>
+    <h1>💕💌Index💌💕</h1>
+    <div>
+        <!-- sec:authorize="isAnonymous()" 시큐리티에 인증되어 있으면 얘네가 보이지 않음
+        로그인 되어있지 않은 상태에서만 얘네를 보이게 해주는 옵션임 -->
+        <a sec:authorize="isAnonymous()" th:href="@{/member/register}">Register</a>
+    </div>
+    <div>
+        <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Login</a>
+
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a>[[| ${ #authentication.principal.member.name } / ${ #authentication.principal.username } |]]</a>
+    <!--    <h1>인증된 사용자만 보이는 태그</h1>-->
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/auth/logout}" method="post">
+            <button>Logout</button>
+        </form>
+
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/post/post}">Post</a>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/admin/admin}">Admin</a>
+    </div>
+
+
+</body>
+</html>
+
